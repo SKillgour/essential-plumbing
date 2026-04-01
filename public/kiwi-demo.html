@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiwi Plumbing & Gas — Palmerston North's Trusted Plumbers & Gasfitters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: none;
+}
+
+:root {
+  --navy: #0a1628;
+  --blue: #0ea5e9;
+  --blue-dark: #0284c7;
+  --orange: #f97316;
+  --white: #ffffff;
+  --dark-bg: #060e1a;
+  --footer-bg: #050d18;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+a, button {
+  cursor: none;
+  text-decoration: none;
+}
+
+img { display: block; max-width: 100%; }
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+#cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 24px; height: 32px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s;
+}
+
+#cursor svg { width: 100%; height: 100%; }
+
+.cursor-trail {
+  position: fixed;
+  border-radius: 50%;
+  background: var(--blue);
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1.2rem 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+}
+
+nav.scrolled {
+  background: rgba(10, 22, 40, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(14, 165, 233, 0.15);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-logo img {
+  height: 42px;
+  filter: brightness(0) invert(1);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--blue); }
+
+.btn-call {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--blue);
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-call:hover {
+  background: var(--blue-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Left gradient overlay */
+#hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to right,
+    rgba(10,22,40,0.88) 0%,
+    rgba(10,22,40,0.70) 35%,
+    rgba(10,22,40,0.30) 65%,
+    rgba(10,22,40,0.10) 100%
+  );
+  pointer-events: none;
+}
+
+#hero-content {
+  position: absolute;
+  top: 50%;
+  left: 8vw;
+  transform: translateY(-50%);
+  z-index: 10;
+  max-width: 640px;
+  opacity: 0;
+}
+
+.hero-eyebrow {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--blue);
+}
+
+.hero-heading {
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+}
+
+.hero-heading .line { display: block; }
+.hero-heading .blue { color: var(--blue); }
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 300;
+  margin-bottom: 2rem;
+  max-width: 440px;
+  line-height: 1.7;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--blue);
+  padding: 0.85rem 2rem;
+  border-radius: 4px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.4);
+}
+
+.btn-secondary {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  padding: 0.85rem 2rem;
+  border-radius: 4px;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--blue);
+  background: rgba(14, 165, 233, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+#services {
+  position: relative;
+  background: var(--dark-bg);
+  padding: 6rem 5vw;
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.section-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--blue);
+}
+
+.section-heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.section-sub {
+  color: rgba(255,255,255,0.55);
+  font-size: 1rem;
+  margin-bottom: 3.5rem;
+  max-width: 480px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+}
+
+.service-card {
+  position: relative;
+  background: rgba(10, 22, 40, 0.6);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  padding: 2rem;
+  overflow: hidden;
+  transition: border-color 0.3s, background 0.3s, transform 0.25s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+  border-color: rgba(14, 165, 233, 0.6);
+  background: rgba(14, 165, 233, 0.04);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(14, 165, 233, 0.12), 0 0 0 1px rgba(14, 165, 233, 0.25);
+  z-index: 2;
+}
+
+/* Blueprint corner brackets */
+.service-card::before,
+.service-card::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+.service-card::before {
+  top: 10px; left: 10px;
+  border-top: 1.5px solid rgba(14, 165, 233, 0.3);
+  border-left: 1.5px solid rgba(14, 165, 233, 0.3);
+}
+
+.service-card::after {
+  bottom: 10px; right: 10px;
+  border-bottom: 1.5px solid rgba(14, 165, 233, 0.3);
+  border-right: 1.5px solid rgba(14, 165, 233, 0.3);
+}
+
+.service-card:hover::before,
+.service-card:hover::after {
+  width: 24px; height: 24px;
+  border-color: rgba(14, 165, 233, 0.8);
+}
+
+.service-ghost-num {
+  position: absolute;
+  top: 0.75rem;
+  right: 1.25rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 3.5rem;
+  color: var(--white);
+  opacity: 0.07;
+  line-height: 1;
+  user-select: none;
+}
+
+.schematic {
+  width: 100%;
+  height: 75px;
+  margin-bottom: 1.25rem;
+}
+
+/* Draw-on animation: default state = hidden */
+.schematic path,
+.schematic line,
+.schematic rect,
+.schematic circle,
+.schematic ellipse {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  transition: stroke-dashoffset 0.7s ease;
+}
+
+.service-card:hover .schematic path,
+.service-card:hover .schematic line,
+.service-card:hover .schematic rect,
+.service-card:hover .schematic circle,
+.service-card:hover .schematic ellipse {
+  stroke-dashoffset: 0;
+}
+
+/* Keep filled elements visible */
+.schematic circle[fill="#0ea5e9"],
+.schematic circle[fill="#f97316"],
+.schematic circle[fill="#0a1628"],
+.schematic path[fill="#f97316"] {
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+}
+
+.service-card h3 {
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  color: var(--white);
+}
+
+.service-card p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+}
+
+/* ============================================================
+   STATS
+   ============================================================ */
+#stats {
+  position: relative;
+  background: var(--navy);
+  padding: 5rem 5vw;
+  overflow: hidden;
+}
+
+#pipe-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.12;
+  z-index: 0;
+}
+
+.stats-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+.stat-item {
+  padding: 2rem 1rem;
+}
+
+.stat-number {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  color: var(--blue);
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.1em;
+}
+
+.stat-suffix {
+  font-size: 0.6em;
+  color: var(--blue);
+}
+
+.stat-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+#testimonials {
+  position: relative;
+  background: var(--dark-bg);
+  padding: 6rem 5vw;
+  overflow: hidden;
+}
+
+#ripple-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.35;
+}
+
+.testimonials-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.testimonial-card {
+  background: rgba(10, 22, 40, 0.7);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 6px;
+  padding: 2rem;
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 1.25rem;
+}
+
+.stars span {
+  color: var(--blue);
+  font-size: 1rem;
+}
+
+.testimonial-card blockquote {
+  font-style: italic;
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  quotes: "\201C" "\201D";
+}
+
+.testimonial-card blockquote::before {
+  content: open-quote;
+  color: var(--blue);
+  font-size: 1.5em;
+  line-height: 0;
+  vertical-align: -0.4em;
+  margin-right: 0.1em;
+  font-style: normal;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.author-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+.author-location {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.1rem;
+}
+
+/* ============================================================
+   CTA STRIP
+   ============================================================ */
+#cta-strip {
+  background: var(--blue);
+  padding: 4rem 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.cta-text h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+
+.cta-text p {
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+}
+
+.btn-phone {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  color: var(--blue);
+  background: var(--white);
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+
+.btn-phone:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+
+.btn-phone svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--footer-bg);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 4rem 5vw 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand img {
+  height: 38px;
+  filter: brightness(0) invert(1);
+  margin-bottom: 1rem;
+}
+
+.footer-brand p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+.footer-col h4 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 1rem;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-col ul li a {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.6);
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover { color: var(--blue); }
+
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.65rem;
+}
+
+.footer-contact-item a {
+  color: rgba(255,255,255,0.6);
+  transition: color 0.2s;
+}
+
+.footer-contact-item a:hover { color: var(--blue); }
+
+/* Flame icon */
+.flame-icon {
+  width: 12px;
+  height: 18px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.flame-icon::before,
+.flame-icon::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+  animation: flicker 1.8s ease-in-out infinite alternate;
+}
+
+.flame-icon::before {
+  width: 12px;
+  height: 18px;
+  background: var(--orange);
+}
+
+.flame-icon::after {
+  width: 7px;
+  height: 11px;
+  background: rgba(255, 220, 100, 0.9);
+  bottom: 2px;
+}
+
+@keyframes flicker {
+  0%   { transform: translateX(-50%) scaleX(1)   scaleY(1)   skewX(0deg); }
+  25%  { transform: translateX(-50%) scaleX(0.94) scaleY(1.04) skewX(-2deg); }
+  50%  { transform: translateX(-50%) scaleX(1.04) scaleY(0.97) skewX(1deg); }
+  75%  { transform: translateX(-50%) scaleX(0.97) scaleY(1.05) skewX(-1deg); }
+  100% { transform: translateX(-50%) scaleX(1)   scaleY(1)   skewX(0deg); }
+}
+
+.footer-base {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-base p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+}
+
+/* ============================================================
+   PHONE BADGE
+   ============================================================ */
+#phone-badge {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 500;
+  background: var(--blue);
+  color: var(--white);
+  border-radius: 999px;
+  padding: 0.75rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 30px rgba(14, 165, 233, 0.45), 0 0 0 0 rgba(14, 165, 233, 0.3);
+  transition: transform 0.25s, box-shadow 0.25s;
+  animation: badge-pulse 2.5s ease-in-out infinite;
+  text-decoration: none;
+}
+
+#phone-badge:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 40px rgba(14, 165, 233, 0.6), 0 0 0 0 rgba(14, 165, 233, 0.3);
+}
+
+.pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+  animation: dot-pulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes dot-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+  70%  { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.45), 0 0 0 0 rgba(14, 165, 233, 0.3); }
+  50%       { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.6), 0 0 0 12px rgba(14, 165, 233, 0); }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  #cta-strip { flex-direction: column; align-items: flex-start; }
+  .hero-heading { font-size: clamp(2.8rem, 10vw, 4rem); }
+}
+
+@media (max-width: 600px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr; }
+  #hero-canvas { display: none; }
+  #hero { background: linear-gradient(135deg, #0a1628 0%, #0c2040 50%, #061222 100%); }
+  #hero::after { background: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     CUSTOM CURSOR
+     ============================================================ -->
+<div id="cursor">
+  <svg viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C12 2 3 13 3 19C3 23.97 7.03 28 12 28C16.97 28 21 23.97 21 19C21 13 12 2 12 2Z" fill="#0ea5e9" opacity="0.9"/>
+    <ellipse cx="9" cy="20" rx="2" ry="3" fill="rgba(255,255,255,0.35)" transform="rotate(-20 9 20)"/>
+  </svg>
+</div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav id="main-nav">
+  <div class="nav-logo">
+    <img src="https://static.wixstatic.com/media/e8a099_2dda15a5ecb54906895df4110bc1ea47~mv2.png" alt="Kiwi Plumbing & Gas">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#stats">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#footer">Contact</a></li>
+  </ul>
+  <a href="tel:0064064063920" class="btn-call">Call Now</a>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero">
+  <div id="hero-canvas"></div>
+
+  <div id="hero-content">
+    <p class="hero-eyebrow">Palmerston North · Est. 2009</p>
+    <h1 class="hero-heading">
+      <span class="line">KIWI /</span>
+      <span class="line blue">PLUMBING</span>
+      <span class="line">/ &amp; GAS</span>
+    </h1>
+    <p class="hero-sub">Palmerston North's trusted plumbers &amp; gasfitters. Fast, reliable, fully licensed — available when you need us most.</p>
+    <div class="hero-ctas">
+      <a href="tel:0064064063920" class="btn-primary">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        06 406 3920
+      </a>
+      <a href="#services" class="btn-secondary">Our Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES
+     ============================================================ -->
+<section id="services">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-heading">Full-Service Plumbing &amp; Gas</h2>
+  <p class="section-sub">Licensed tradespeople covering all residential and commercial needs across Palmerston North and the Manawatu.</p>
+
+  <div class="services-grid">
+
+    <!-- Card 1: General Plumbing -->
+    <div class="service-card">
+      <span class="service-ghost-num">01</span>
+      <svg viewBox="0 0 200 75" class="schematic" stroke="#0ea5e9" fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path d="M 100 68 V 50 Q 100 35 85 35 H 20"/>
+        <path d="M 100 68 V 50 Q 100 35 115 35 H 180"/>
+        <rect x="88" y="10" width="24" height="28" rx="3"/>
+        <line x1="100" y1="10" x2="100" y2="2"/>
+        <circle cx="100" cy="38" r="4" fill="#0ea5e9" opacity="0.3"/>
+        <line x1="35" y1="28" x2="35" y2="42"/>
+        <line x1="165" y1="28" x2="165" y2="42"/>
+      </svg>
+      <h3>General Plumbing</h3>
+      <p>Leaks, burst pipes, tap repairs, toilet installations. Diagnosed and fixed right the first time.</p>
+    </div>
+
+    <!-- Card 2: Gas Fitting -->
+    <div class="service-card">
+      <span class="service-ghost-num">02</span>
+      <svg viewBox="0 0 200 75" class="schematic" stroke="#f97316" fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path d="M 20 50 H 80 V 30 H 120 V 50 H 180"/>
+        <circle cx="80" cy="50" r="8"/>
+        <circle cx="120" cy="50" r="8"/>
+        <path d="M 100 30 V 15 Q 100 5 107 5 Q 100 12 108 18 Q 100 15 104 22" stroke="#f97316"/>
+        <line x1="88" y1="30" x2="88" y2="22"/>
+        <line x1="112" y1="30" x2="112" y2="22"/>
+        <circle cx="100" cy="50" r="3" fill="#f97316" opacity="0.4"/>
+      </svg>
+      <h3>Gas Fitting</h3>
+      <p>LPG and natural gas installations, appliance connections, same-day compliance certificates.</p>
+    </div>
+
+    <!-- Card 3: Hot Water -->
+    <div class="service-card">
+      <span class="service-ghost-num">03</span>
+      <svg viewBox="0 0 200 75" class="schematic" stroke="#0ea5e9" fill="none" stroke-width="1.5" stroke-linecap="round">
+        <rect x="70" y="8" width="60" height="58" rx="6"/>
+        <line x1="100" y1="8" x2="100" y2="2"/>
+        <path d="M 100 2 H 160 V 20"/>
+        <line x1="100" y1="66" x2="100" y2="72"/>
+        <path d="M 100 72 H 40 V 55"/>
+        <path d="M 85 35 Q 90 28 100 32 Q 110 35 115 28" stroke-width="1"/>
+        <circle cx="100" cy="40" r="10" stroke-width="1" opacity="0.4"/>
+      </svg>
+      <h3>Hot Water Systems</h3>
+      <p>Electric, gas and heat-pump hot water — supply, install or replace. All brands.</p>
+    </div>
+
+    <!-- Card 4: Bathrooms -->
+    <div class="service-card">
+      <span class="service-ghost-num">04</span>
+      <svg viewBox="0 0 200 75" class="schematic" stroke="#0ea5e9" fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path d="M 15 55 H 185 Q 185 65 175 65 H 25 Q 15 65 15 55 Z"/>
+        <path d="M 15 55 V 30 Q 15 20 25 20 H 55 V 55"/>
+        <path d="M 55 30 H 185 V 55"/>
+        <line x1="170" y1="65" x2="170" y2="72"/>
+        <circle cx="25" cy="20" r="5"/>
+        <line x1="25" y1="15" x2="25" y2="8"/>
+        <line x1="20" y1="20" x2="13" y2="20"/>
+      </svg>
+      <h3>Bathroom Renovations</h3>
+      <p>Full wet-area fit-outs. We work with your builder or manage the whole job.</p>
+    </div>
+
+    <!-- Card 5: Drains -->
+    <div class="service-card">
+      <span class="service-ghost-num">05</span>
+      <svg viewBox="0 0 200 75" class="schematic" stroke="#0ea5e9" fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path d="M 60 5 H 140 Q 150 5 150 15 V 65 Q 150 72 140 72 H 60 Q 50 72 50 65 V 15 Q 50 5 60 5 Z"/>
+        <line x1="100" y1="20" x2="100" y2="55"/>
+        <path d="M 85 45 L 100 60 L 115 45"/>
+        <line x1="75" y1="30" x2="125" y2="30"/>
+        <line x1="70" y1="38" x2="130" y2="38"/>
+        <line x1="75" y1="46" x2="100" y2="46"/>
+      </svg>
+      <h3>Drain Unblocking</h3>
+      <p>High-pressure water jetting and CCTV drain inspection. Most blockages cleared within the hour.</p>
+    </div>
+
+    <!-- Card 6: Commercial -->
+    <div class="service-card">
+      <span class="service-ghost-num">06</span>
+      <svg viewBox="0 0 200 75" class="schematic" stroke="#0ea5e9" fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path d="M 10 38 H 55"/>
+        <path d="M 55 38 H 100"/>
+        <path d="M 100 38 H 145"/>
+        <path d="M 145 38 H 190"/>
+        <line x1="55" y1="38" x2="55" y2="15"/>
+        <line x1="100" y1="38" x2="100" y2="62"/>
+        <line x1="145" y1="38" x2="145" y2="15"/>
+        <circle cx="55" cy="38" r="4" fill="#0a1628" stroke="#0ea5e9"/>
+        <circle cx="100" cy="38" r="4" fill="#0a1628" stroke="#0ea5e9"/>
+        <circle cx="145" cy="38" r="4" fill="#0a1628" stroke="#0ea5e9"/>
+        <rect x="44" y="8" width="22" height="14" rx="2"/>
+        <rect x="134" y="8" width="22" height="14" rx="2"/>
+        <rect x="89" y="55" width="22" height="14" rx="2"/>
+      </svg>
+      <h3>Commercial</h3>
+      <p>Offices, hospitality and light industrial. Fully compliant, minimal disruption.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     STATS
+     ============================================================ -->
+<section id="stats">
+  <svg id="pipe-svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice">
+    <path class="pipe-path" d="M 0 150 H 1200" stroke="#0ea5e9" stroke-width="3" fill="none"/>
+    <path class="pipe-path" d="M 150 150 V 80 H 200 V 20" stroke="#0ea5e9" stroke-width="2" fill="none"/>
+    <path class="pipe-path" d="M 400 150 V 220 H 450 V 280" stroke="#0ea5e9" stroke-width="2" fill="none"/>
+    <path class="pipe-path" d="M 750 150 V 70 H 800 V 20" stroke="#0ea5e9" stroke-width="2" fill="none"/>
+    <path class="pipe-path" d="M 1020 150 V 230 H 1060 V 280" stroke="#0ea5e9" stroke-width="2" fill="none"/>
+    <circle cx="150" cy="150" r="6" fill="#0ea5e9" opacity="0.5"/>
+    <circle cx="400" cy="150" r="6" fill="#0ea5e9" opacity="0.5"/>
+    <circle cx="750" cy="150" r="6" fill="#0ea5e9" opacity="0.5"/>
+    <circle cx="1020" cy="150" r="6" fill="#0ea5e9" opacity="0.5"/>
+    <path class="pipe-path" d="M 300 150 V 110 H 350 V 80 H 500" stroke="#0ea5e9" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <path class="pipe-path" d="M 600 150 V 190 H 680 V 220 H 900" stroke="#0ea5e9" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <path class="pipe-path" d="M 900 150 V 100 H 950 V 60 H 1100" stroke="#0ea5e9" stroke-width="1.5" fill="none" opacity="0.5"/>
+  </svg>
+
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number">
+        <span class="stat-val" data-target="15">0</span><span class="stat-suffix">+</span>
+      </div>
+      <div class="stat-label">Years in Business</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">
+        <span class="stat-val" data-target="800">0</span><span class="stat-suffix">+</span>
+      </div>
+      <div class="stat-label">Jobs Completed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">
+        <span class="stat-val" data-target="100">0</span><span class="stat-suffix">%</span>
+      </div>
+      <div class="stat-label">Licensed &amp; Insured</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">
+        <span class="stat-val" data-target="4.9" data-decimal="1">0</span><span class="stat-suffix">★</span>
+      </div>
+      <div class="stat-label">Google Rating</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+     ============================================================ -->
+<section id="testimonials">
+  <canvas id="ripple-canvas"></canvas>
+
+  <div class="testimonials-inner">
+    <div class="section-label">What Clients Say</div>
+    <h2 class="section-heading">Real Kiwis. Real Results.</h2>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <blockquote>Had a burst pipe at 10pm on a Friday. Kiwi Plumbing were at my door in under 45 minutes. Job done properly, no mess. Absolute legends.</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">S</div>
+          <div>
+            <div class="author-name">Sarah T.</div>
+            <div class="author-location">Palmerston North</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <blockquote>Used them for a full bathroom reno. Honest pricing upfront, no surprises on the invoice. The result looks incredible.</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div>
+            <div class="author-name">Mark H.</div>
+            <div class="author-location">Feilding</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <blockquote>Gas hob install plus Healthy Homes report done same day. Super professional, had all paperwork sorted on the spot.</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">J</div>
+          <div>
+            <div class="author-name">Jo &amp; Dave R.</div>
+            <div class="author-location">Palmerston North</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA STRIP
+     ============================================================ -->
+<section id="cta-strip">
+  <div class="cta-text">
+    <h2>Need a plumber today?<br>We're ready right now.</h2>
+    <p>Fast response across Palmerston North &amp; Manawatu. No callout fee for booked jobs.</p>
+  </div>
+  <a href="tel:0064064063920" class="btn-phone">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+    06 406 3920
+  </a>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://static.wixstatic.com/media/e8a099_2dda15a5ecb54906895df4110bc1ea47~mv2.png" alt="Kiwi Plumbing & Gas">
+      <p>Palmerston North's trusted plumbing and gas specialists since 2009. Licensed, insured, and proud to serve the Manawatu region.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">General Plumbing</a></li>
+        <li><a href="#services">Gas Fitting</a></li>
+        <li><a href="#services">Hot Water Systems</a></li>
+        <li><a href="#services">Bathroom Renovations</a></li>
+        <li><a href="#services">Drain Unblocking</a></li>
+        <li><a href="#services">Commercial</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item">
+        <svg width="14" height="14" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:0064064063920">06 406 3920</a>
+      </div>
+      <div class="footer-contact-item">
+        <svg width="14" height="14" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:info@kiwiplumbingandgas.co.nz">info@kiwiplumbingandgas.co.nz</a>
+      </div>
+      <div class="footer-contact-item">
+        <svg width="14" height="14" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Palmerston North, Manawatu</span>
+      </div>
+      <div class="footer-contact-item">
+        <div class="flame-icon"></div>
+        <span>24/7 Gas Emergency Response</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-base">
+    <p>&copy; 2025 Kiwi Plumbing &amp; Gas Ltd. All rights reserved.</p>
+    <p>Licensed Plumber &amp; Gasfitter · Master Plumbers Member · Manawatu, NZ</p>
+  </div>
+</footer>
+
+<!-- ============================================================
+     PHONE BADGE
+     ============================================================ -->
+<a href="tel:0064064063920" id="phone-badge">
+  <div class="pulse-dot"></div>
+  06 406 3920
+</a>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+/* ============================================================
+   1. GSAP SETUP
+   ============================================================ */
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============================================================
+   2. CUSTOM CURSOR
+   ============================================================ */
+(function initCursor() {
+  const cursorEl = document.getElementById('cursor');
+  const TRAIL_COUNT = 10;
+  const trails = [];
+
+  // Create trail elements
+  for (let i = 0; i < TRAIL_COUNT; i++) {
+    const el = document.createElement('div');
+    el.classList.add('cursor-trail');
+    const size = 8 - i * 0.55;
+    const opacity = 0.55 - i * 0.05;
+    el.style.cssText = `width:${size}px;height:${size}px;opacity:${opacity};`;
+    document.body.appendChild(el);
+    trails.push({ el, x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  }
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let cursorX = mouseX;
+  let cursorY = mouseY;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function rafLoop() {
+    // Main cursor — snappy
+    cursorX += (mouseX - cursorX) * 0.5;
+    cursorY += (mouseY - cursorY) * 0.5;
+    cursorEl.style.left = cursorX + 'px';
+    cursorEl.style.top  = cursorY + 'px';
+
+    // Trail — spring physics
+    let prevX = mouseX, prevY = mouseY;
+    trails.forEach((t, i) => {
+      const factor = 0.25 + i * 0.03;
+      t.x += (prevX - t.x) * factor;
+      t.y += (prevY - t.y) * factor;
+      t.el.style.left = t.x + 'px';
+      t.el.style.top  = t.y + 'px';
+      prevX = t.x;
+      prevY = t.y;
+    });
+
+    requestAnimationFrame(rafLoop);
+  }
+  rafLoop();
+})();
+
+/* ============================================================
+   3. THREE.JS SCENE INIT
+   ============================================================ */
+const heroCanvas = document.getElementById('hero-canvas');
+const isMobile = window.innerWidth < 600;
+
+let renderer, scene, camera, tapGroup, waterParticles, waterGeo, waterPositions, waterVelocities;
+let orbitAngle = 0;
+let isOrbiting = false;
+let waterActive = false;
+let waterMat;
+
+if (!isMobile) {
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(heroCanvas.offsetWidth || window.innerWidth, heroCanvas.offsetHeight || window.innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.domElement.style.position = 'absolute';
+  renderer.domElement.style.inset = '0';
+  renderer.domElement.style.width = '100%';
+  renderer.domElement.style.height = '100%';
+  heroCanvas.appendChild(renderer.domElement);
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a1628);
+  scene.fog = new THREE.Fog(0x0a1628, 18, 40);
+
+  /* ============================================================
+     4. CAMERA
+     ============================================================ */
+  const w = heroCanvas.offsetWidth || window.innerWidth;
+  const h = heroCanvas.offsetHeight || window.innerHeight;
+  camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+  camera.position.set(7, 3, 7);
+  camera.lookAt(0, 0, 0);
+
+  /* ============================================================
+     5. LIGHTING
+     ============================================================ */
+  const ambientLight = new THREE.AmbientLight(0x1a3a5c, 0.8);
+  scene.add(ambientLight);
+
+  const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  dirLight.position.set(5, 8, 5);
+  dirLight.castShadow = true;
+  scene.add(dirLight);
+
+  const bluePoint = new THREE.PointLight(0x0ea5e9, 3, 15);
+  bluePoint.position.set(-3, 3, 3);
+  scene.add(bluePoint);
+
+  const bluePoint2 = new THREE.PointLight(0x0284c7, 1.5, 10);
+  bluePoint2.position.set(3, -2, -3);
+  scene.add(bluePoint2);
+
+  /* ============================================================
+     6. MATERIALS
+     ============================================================ */
+  const chromeMat = new THREE.MeshStandardMaterial({
+    color: 0xe8eef4,
+    metalness: 0.95,
+    roughness: 0.05,
+  });
+
+  const darkChromeMat = new THREE.MeshStandardMaterial({
+    color: 0x8899aa,
+    metalness: 0.9,
+    roughness: 0.15,
+  });
+
+  const blueMat = new THREE.MeshStandardMaterial({
+    color: 0x0ea5e9,
+    emissive: 0x0284c7,
+    emissiveIntensity: 0.3,
+    metalness: 0.5,
+    roughness: 0.3,
+  });
+
+  const rubberMat = new THREE.MeshStandardMaterial({
+    color: 0x1a252e,
+    metalness: 0,
+    roughness: 0.9,
+  });
+
+  /* ============================================================
+     7. TAP GROUP + PART FACTORY
+     ============================================================ */
+  tapGroup = new THREE.Group();
+  scene.add(tapGroup);
+
+  const partTargets = []; // [{mesh, tx, ty, tz}]
+
+  function makePart(geometry, material, pos, rot) {
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    const [tx, ty, tz] = pos;
+    const [rx, ry, rz] = rot || [0, 0, 0];
+
+    // Exploded: random scatter
+    mesh.position.set(
+      (Math.random() * 2 - 1) * 10,
+      (Math.random() * 2 - 1) * 8,
+      (Math.random() * 2 - 1) * 10
+    );
+    mesh.rotation.set(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2);
+
+    tapGroup.add(mesh);
+    partTargets.push({ mesh, tx, ty, tz, rx, ry, rz });
+    return mesh;
+  }
+
+  /* ============================================================
+     8. CREATE ALL TAP PARTS
+     ============================================================ */
+  // 1. Base flange
+  makePart(new THREE.CylinderGeometry(0.7, 0.75, 0.18, 20), darkChromeMat, [0, -1.55, 0]);
+  // 2. Tail nut
+  makePart(new THREE.CylinderGeometry(0.38, 0.38, 0.1, 6), darkChromeMat, [0, -1.65, 0]);
+  // 3. Main body
+  makePart(new THREE.CylinderGeometry(0.32, 0.4, 1.45, 18), chromeMat, [0, -0.55, 0]);
+  // 4. Shoulder
+  makePart(new THREE.CylinderGeometry(0.25, 0.32, 0.18, 16), chromeMat, [0, 0.28, 0]);
+  // 5. Packing nut
+  makePart(new THREE.CylinderGeometry(0.29, 0.29, 0.14, 6), darkChromeMat, [0, 0.44, 0]);
+  // 6. Collar ring
+  makePart(new THREE.TorusGeometry(0.27, 0.04, 10, 32), chromeMat, [0, 0.56, 0], [Math.PI / 2, 0, 0]);
+  // 7. Spindle
+  makePart(new THREE.CylinderGeometry(0.1, 0.13, 0.32, 14), chromeMat, [0, 0.82, 0]);
+  // 8. Handle bar1
+  makePart(new THREE.CylinderGeometry(0.035, 0.035, 1.1, 10), chromeMat, [0, 1.12, 0], [0, 0, Math.PI / 2]);
+  // 9. Handle bar2
+  makePart(new THREE.CylinderGeometry(0.035, 0.035, 1.1, 10), chromeMat, [0, 1.12, 0], [Math.PI / 2, 0, 0]);
+  // 10. End cap L
+  makePart(new THREE.SphereGeometry(0.065, 12, 12), darkChromeMat, [-0.55, 1.12, 0]);
+  // 11. End cap R
+  makePart(new THREE.SphereGeometry(0.065, 12, 12), darkChromeMat, [0.55, 1.12, 0]);
+  // 12. End cap F
+  makePart(new THREE.SphereGeometry(0.065, 12, 12), darkChromeMat, [0, 1.12, -0.55]);
+  // 13. End cap B
+  makePart(new THREE.SphereGeometry(0.065, 12, 12), darkChromeMat, [0, 1.12, 0.55]);
+  // 14. Handle top
+  makePart(new THREE.SphereGeometry(0.1, 14, 14), chromeMat, [0, 1.26, 0]);
+  // 15. Washer1
+  makePart(new THREE.TorusGeometry(0.22, 0.028, 8, 24), rubberMat, [0, -1.0, 0], [Math.PI / 2, 0, 0]);
+  // 16. Washer2
+  makePart(new THREE.TorusGeometry(0.2, 0.025, 8, 24), rubberMat, [0, -1.3, 0], [Math.PI / 2, 0, 0]);
+  // 17. Spout mount
+  makePart(new THREE.CylinderGeometry(0.13, 0.13, 0.55, 14), chromeMat, [0.57, -0.18, 0], [0, 0, Math.PI / 2]);
+  // 18. Spout elbow
+  makePart(new THREE.TorusGeometry(0.2, 0.12, 10, 16, Math.PI / 2), chromeMat, [0.84, -0.38, 0], [0, Math.PI, Math.PI / 2]);
+  // 19. Spout down
+  makePart(new THREE.CylinderGeometry(0.1, 0.1, 0.55, 12), chromeMat, [1.04, -0.78, 0]);
+  // 20. Aerator
+  makePart(new THREE.CylinderGeometry(0.11, 0.11, 0.1, 12), blueMat, [1.04, -1.08, 0]);
+
+  /* ============================================================
+     9. WATER PARTICLE SYSTEM
+     ============================================================ */
+  const PARTICLE_COUNT = 300;
+  waterGeo = new THREE.BufferGeometry();
+  waterPositions = new Float32Array(PARTICLE_COUNT * 3);
+  waterVelocities = [];
+
+  // Aerator world-space offset in tapGroup: [1.04, -1.13, 0]
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    waterPositions[i * 3]     = 1.04 + (Math.random() * 0.06 - 0.03);
+    waterPositions[i * 3 + 1] = -1.13 - Math.random() * 2.0;
+    waterPositions[i * 3 + 2] = 0 + (Math.random() * 0.06 - 0.03);
+    waterVelocities.push({
+      x: (Math.random() * 2 - 1) * 0.006,
+      y: -(0.018 + Math.random() * 0.022),
+      z: (Math.random() * 2 - 1) * 0.006,
+    });
+  }
+
+  waterGeo.setAttribute('position', new THREE.BufferAttribute(waterPositions, 3));
+
+  waterMat = new THREE.PointsMaterial({
+    color: 0x7dd3fc,
+    size: 0.05,
+    transparent: true,
+    opacity: 0,
+    sizeAttenuation: true,
+  });
+
+  waterParticles = new THREE.Points(waterGeo, waterMat);
+  waterParticles.visible = false;
+  tapGroup.add(waterParticles);
+
+  /* ============================================================
+     10. ASSEMBLY ANIMATION TRIGGER
+     ============================================================ */
+  function startAssembly() {
+    partTargets.forEach((pt, i) => {
+      // Position: elastic.out
+      gsap.to(pt.mesh.position, {
+        x: pt.tx,
+        y: pt.ty,
+        z: pt.tz,
+        duration: 1.3,
+        delay: i * 0.055,
+        ease: 'elastic.out(1, 0.65)',
+      });
+      // Rotation: power3.out
+      gsap.to(pt.mesh.rotation, {
+        x: pt.rx || 0,
+        y: pt.ry || 0,
+        z: pt.rz || 0,
+        duration: 1.3,
+        delay: i * 0.055,
+        ease: 'power3.out',
+      });
+    });
+
+    const totalDuration = 1.3 + (partTargets.length - 1) * 0.055 + 0.4;
+
+    gsap.delayedCall(totalDuration, () => {
+      // Show water
+      waterParticles.visible = true;
+      waterActive = true;
+      gsap.to(waterMat, { opacity: 0.75, duration: 1.2 });
+
+      // Start orbit
+      isOrbiting = true;
+
+      // Fade in hero text
+      gsap.to('#hero-content', {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out',
+      });
+    });
+  }
+
+  gsap.set('#hero-content', { y: 20 });
+  startAssembly();
+
+  /* ============================================================
+     11. CAMERA ORBIT LOOP + RENDER
+     ============================================================ */
+  const orbitRadius = 7;
+  const orbitHeight = 2.5;
+  const orbitSpeed  = 0.004;
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    if (isOrbiting) {
+      orbitAngle += orbitSpeed;
+      camera.position.x = Math.sin(orbitAngle) * orbitRadius;
+      camera.position.z = Math.cos(orbitAngle) * orbitRadius;
+      camera.position.y = orbitHeight;
+      camera.lookAt(0, 0, 0);
+    }
+
+    // Update water particles
+    if (waterActive) {
+      const positions = waterGeo.attributes.position.array;
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        positions[i * 3]     += waterVelocities[i].x;
+        positions[i * 3 + 1] += waterVelocities[i].y;
+        positions[i * 3 + 2] += waterVelocities[i].z;
+
+        // Reset particle if it falls too far below aerator
+        if (positions[i * 3 + 1] < -1.13 - 3.5) {
+          positions[i * 3]     = 1.04 + (Math.random() * 0.06 - 0.03);
+          positions[i * 3 + 1] = -1.13;
+          positions[i * 3 + 2] = (Math.random() * 0.06 - 0.03);
+          waterVelocities[i].x = (Math.random() * 2 - 1) * 0.006;
+          waterVelocities[i].y = -(0.018 + Math.random() * 0.022);
+          waterVelocities[i].z = (Math.random() * 2 - 1) * 0.006;
+        }
+      }
+      waterGeo.attributes.position.needsUpdate = true;
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  /* ============================================================
+     12. SCROLL PIN + TAP SINK BEHAVIOUR
+     ============================================================ */
+  ScrollTrigger.create({
+    trigger: '#hero',
+    start: 'top top',
+    end: '+=300',
+    pin: true,
+    onUpdate: (self) => {
+      const p = self.progress;
+
+      if (tapGroup) {
+        tapGroup.position.y = gsap.utils.interpolate(0, -4, p);
+        const s = gsap.utils.interpolate(1, 0.6, p);
+        tapGroup.scale.setScalar(s);
+
+        if (p >= 0.8 && tapGroup.scale.x > 0.01) {
+          gsap.to(tapGroup.scale, { x: 0, y: 0, z: 0, duration: 0.2 });
+        } else if (p < 0.8 && tapGroup.scale.x < 0.01) {
+          const rs = gsap.utils.interpolate(1, 0.6, p);
+          tapGroup.scale.setScalar(rs);
+        }
+
+        if (waterMat) {
+          waterMat.opacity = gsap.utils.interpolate(0.75, 1, p);
+        }
+      }
+
+      // Fade hero content
+      gsap.set('#hero-content', { opacity: gsap.utils.interpolate(1, 0, p) });
+    },
+  });
+
+} else {
+  // Mobile fallback: fade in hero content immediately
+  gsap.to('#hero-content', { opacity: 1, duration: 0.8, delay: 0.3 });
+}
+
+/* ============================================================
+   13. NAV SCROLL CLASS
+   ============================================================ */
+(function initNav() {
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+})();
+
+/* ============================================================
+   14. STATS COUNTER + PIPE NETWORK ANIMATION
+   ============================================================ */
+(function initStats() {
+  // Pipe network: set initial dasharray/dashoffset
+  const pipePaths = document.querySelectorAll('.pipe-path');
+  pipePaths.forEach(path => {
+    try {
+      const len = path.getTotalLength ? path.getTotalLength() : 200;
+      path.style.strokeDasharray  = len;
+      path.style.strokeDashoffset = len;
+      path.style.transition = 'none';
+    } catch(e) {}
+  });
+
+  ScrollTrigger.create({
+    trigger: '#stats',
+    start: 'top 80%',
+    once: true,
+    onEnter: () => {
+      // Animate pipes
+      pipePaths.forEach((path, i) => {
+        gsap.to(path, {
+          strokeDashoffset: 0,
+          duration: 1.8,
+          delay: i * 0.12,
+          ease: 'power2.out',
+        });
+      });
+
+      // Animate counters
+      document.querySelectorAll('.stat-val').forEach(el => {
+        const target  = parseFloat(el.dataset.target);
+        const decimal = el.dataset.decimal ? parseInt(el.dataset.decimal) : 0;
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 2,
+          delay: 0.4,
+          ease: 'power2.out',
+          onUpdate: () => {
+            el.textContent = decimal > 0
+              ? obj.val.toFixed(decimal)
+              : Math.round(obj.val);
+          },
+        });
+      });
+    },
+  });
+})();
+
+/* ============================================================
+   15. TESTIMONIAL SLIDE-INS
+   ============================================================ */
+(function initTestimonials() {
+  gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(card, {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          delay: i * 0.15,
+          ease: 'power3.out',
+        });
+      },
+    });
+  });
+})();
+
+/* ============================================================
+   16. WATER RIPPLE CANVAS
+   ============================================================ */
+(function initRipple() {
+  const canvas = document.getElementById('ripple-canvas');
+  const ctx = canvas.getContext('2d');
+  const ripples = [];
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+
+  function addRipple() {
+    const section = document.getElementById('testimonials');
+    const rect = section.getBoundingClientRect();
+    ripples.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: 0,
+      maxR: 80 + Math.random() * 80,
+      alpha: 0.5,
+    });
+  }
+
+  setInterval(addRipple, 700);
+
+  function drawRipples() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+      rp.r     += 0.8;
+      rp.alpha -= 0.006;
+
+      if (rp.alpha <= 0 || rp.r > rp.maxR) {
+        ripples.splice(i, 1);
+        continue;
+      }
+
+      ctx.beginPath();
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(14, 165, 233, ${rp.alpha})`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+    requestAnimationFrame(drawRipples);
+  }
+  drawRipples();
+})();
+
+/* ============================================================
+   17. WINDOW RESIZE HANDLER
+   ============================================================ */
+window.addEventListener('resize', () => {
+  if (renderer && camera) {
+    const w = heroCanvas.offsetWidth || window.innerWidth;
+    const h = heroCanvas.offsetHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+
+  // Ripple canvas resize
+  const rippleCanvas = document.getElementById('ripple-canvas');
+  if (rippleCanvas) {
+    rippleCanvas.width  = rippleCanvas.offsetWidth;
+    rippleCanvas.height = rippleCanvas.offsetHeight;
+  }
+
+  ScrollTrigger.refresh();
+}, { passive: true });
+
+</script>
+</body>
+</html>

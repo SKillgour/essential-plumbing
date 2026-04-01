@@ -1,0 +1,21 @@
+:root {
+  --color-bg:           #08101A;
+  --color-surface:      #0D1925;
+  --color-surface-2:    #132030;
+  --color-surface-3:    #1A2A3D;
+  --color-accent:       #1E9FD4;
+  --color-accent-bright:#38BDF8;
+  --color-cream:        #E8F4F8;
+  --color-text:         #E8F4F8;
+  --color-text-muted:   rgba(232,244,248,0.6);
+  --color-border:       rgba(30,159,212,0.15);
+  --color-border-strong:rgba(30,159,212,0.35);
+
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  --radius:     3px;
+  --radius-lg:  6px;
+  --max-width:  1280px;
+  --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}

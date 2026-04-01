@@ -1,0 +1,25 @@
+import type { StructureResolver } from 'sanity/structure'
+
+const SINGLETONS = ['siteSettings', 'contactSettings', 'seoDefaults']
+
+export const structure: StructureResolver = (S) =>
+  S.list()
+    .title('Content')
+    .items([
+      S.listItem()
+        .title('Site Settings')
+        .id('siteSettings')
+        .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+      S.listItem()
+        .title('Contact & Location')
+        .id('contactSettings')
+        .child(S.document().schemaType('contactSettings').documentId('contactSettings')),
+      S.listItem()
+        .title('SEO Defaults')
+        .id('seoDefaults')
+        .child(S.document().schemaType('seoDefaults').documentId('seoDefaults')),
+      S.divider(),
+      ...S.documentTypeListItems().filter(
+        (item) => !SINGLETONS.includes(item.getId() ?? '')
+      ),
+    ])
