@@ -20,13 +20,12 @@ export default function EpIntro() {
       return
     }
 
-    // Pipes draw in 0-1.0s, fitting pops 0.9s, brand rises 1.2s
-    // Hold until 2.4s, then fade out over 0.7s
+    // Logo in at 0.3s, name in at 1.0s, hold until 2.4s, fade 0.6s, done 3.0s
     const fadeTimer = setTimeout(() => setFading(true), 2400)
     const doneTimer = setTimeout(() => {
       setGone(true)
       setDone()
-    }, 3100)
+    }, 3000)
 
     return () => {
       clearTimeout(fadeTimer)
@@ -38,37 +37,7 @@ export default function EpIntro() {
 
   return (
     <div className={`ep-intro${fading ? ' ep-intro--fading' : ''}`} aria-hidden="true">
-
-      {/* Animated pipe assembly */}
-      <svg
-        className="ep-intro__pipes"
-        viewBox="0 0 400 240"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Outer glow layer */}
-        <path className="ep-intro__pipe-glow ep-intro__pipe-glow--left"  d="M -10 120 L 200 120" />
-        <path className="ep-intro__pipe-glow ep-intro__pipe-glow--right" d="M 410 120 L 200 120" />
-        <path className="ep-intro__pipe-glow ep-intro__pipe-glow--top"   d="M 200 -10 L 200 120" />
-
-        {/* Main pipe strokes */}
-        <path className="ep-intro__pipe ep-intro__pipe--left"  d="M -10 120 L 200 120" />
-        <path className="ep-intro__pipe ep-intro__pipe--right" d="M 410 120 L 200 120" />
-        <path className="ep-intro__pipe ep-intro__pipe--top"   d="M 200 -10 L 200 120" />
-
-        {/* End caps (flanges) */}
-        <circle cx="-10"  cy="120" r="13" className="ep-intro__cap ep-intro__cap--left"  />
-        <circle cx="410"  cy="120" r="13" className="ep-intro__cap ep-intro__cap--right" />
-        <circle cx="200"  cy="-10" r="13" className="ep-intro__cap ep-intro__cap--top"   />
-
-        {/* Central T-fitting */}
-        <circle cx="200" cy="120" r="24" className="ep-intro__fitting"       />
-        <circle cx="200" cy="120" r="15" className="ep-intro__fitting-inner" />
-        <circle cx="200" cy="120" r="5"  className="ep-intro__fitting-bolt"  />
-      </svg>
-
-      {/* Logo + wordmark */}
-      <div className="ep-intro__brand">
+      <div className="ep-intro__logo-wrap">
         <Image
           src="/ep-logo.png"
           alt="Essential Plumbing and Gas"
@@ -77,9 +46,11 @@ export default function EpIntro() {
           className="ep-intro__logo"
           priority
         />
-        <p className="ep-intro__tagline">Plumbing + Gas Services</p>
       </div>
-
+      <div className="ep-intro__name-wrap">
+        <p className="ep-intro__business">ESSENTIAL PLUMBING</p>
+        <p className="ep-intro__service">+ GAS SERVICES</p>
+      </div>
     </div>
   )
 }

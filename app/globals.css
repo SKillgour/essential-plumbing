@@ -83,120 +83,52 @@ img { display: block; max-width: 100%; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 36px;
+  gap: 20px;
   opacity: 1;
-  transition: opacity 0.7s ease;
+  transition: opacity 0.6s ease;
 }
 .ep-intro--fading {
   opacity: 0;
   pointer-events: none;
 }
-
-/* Pipe SVG */
-.ep-intro__pipes {
-  width: clamp(240px, 55vw, 400px);
-  height: auto;
-  overflow: visible;
-}
-
-/* Glow layer */
-.ep-intro__pipe-glow {
-  stroke: var(--color-accent);
-  stroke-width: 30;
-  stroke-linecap: round;
-  opacity: 0.12;
-  stroke-dasharray: 420;
-  stroke-dashoffset: 420;
-}
-.ep-intro__pipe-glow--left  { animation: ep-pipe-draw 1.0s cubic-bezier(0.4,0,0.2,1) 0.1s forwards; }
-.ep-intro__pipe-glow--right { animation: ep-pipe-draw 1.0s cubic-bezier(0.4,0,0.2,1) 0.1s forwards; }
-.ep-intro__pipe-glow--top   {
-  stroke-dasharray: 140;
-  stroke-dashoffset: 140;
-  animation: ep-pipe-draw 0.75s cubic-bezier(0.4,0,0.2,1) 0.2s forwards;
-}
-
-/* Main pipes */
-.ep-intro__pipe {
-  stroke: var(--color-accent);
-  stroke-width: 14;
-  stroke-linecap: round;
-  filter: drop-shadow(0 0 8px var(--color-accent));
-  stroke-dasharray: 420;
-  stroke-dashoffset: 420;
-}
-.ep-intro__pipe--left  { animation: ep-pipe-draw 1.0s cubic-bezier(0.4,0,0.2,1) 0.1s forwards; }
-.ep-intro__pipe--right { animation: ep-pipe-draw 1.0s cubic-bezier(0.4,0,0.2,1) 0.1s forwards; }
-.ep-intro__pipe--top   {
-  stroke-dasharray: 140;
-  stroke-dashoffset: 140;
-  animation: ep-pipe-draw 0.75s cubic-bezier(0.4,0,0.2,1) 0.2s forwards;
-}
-
-/* Flanged end caps */
-.ep-intro__cap {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 3;
+.ep-intro__logo-wrap {
   opacity: 0;
-  animation: ep-fade-in 0.3s ease 0.1s forwards;
-}
-.ep-intro__cap--left  { fill: var(--color-bg); }
-.ep-intro__cap--right { fill: var(--color-bg); animation-delay: 0.1s; }
-.ep-intro__cap--top   { fill: var(--color-bg); animation-delay: 0.2s; }
-
-/* Central T-fitting */
-.ep-intro__fitting {
-  fill: var(--color-bg);
-  stroke: var(--color-accent);
-  stroke-width: 3;
-  transform-origin: 200px 120px;
-  transform: scale(0);
-  animation: ep-pop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.88s forwards;
-}
-.ep-intro__fitting-inner {
-  fill: var(--color-accent);
-  opacity: 0.25;
-  transform-origin: 200px 120px;
-  transform: scale(0);
-  animation: ep-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.96s forwards;
-}
-.ep-intro__fitting-bolt {
-  fill: var(--color-accent);
-  transform-origin: 200px 120px;
-  transform: scale(0);
-  animation: ep-pop 0.3s ease 1.05s forwards;
-}
-
-/* Brand block */
-.ep-intro__brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  opacity: 0;
-  animation: ep-rise 0.55s ease 1.25s forwards;
+  transform: scale(0.88) translateY(10px);
+  animation: ep-logo-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
 }
 .ep-intro__logo {
   width: auto;
-  height: clamp(44px, 8vw, 64px);
+  height: clamp(56px, 10vw, 80px);
   object-fit: contain;
-  filter: brightness(0) invert(1);
 }
-.ep-intro__tagline {
+.ep-intro__name-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  animation: ep-name-in 0.5s ease 1.05s forwards;
+}
+.ep-intro__business {
+  font-family: var(--font-heading);
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--color-cream);
+  text-transform: uppercase;
+}
+.ep-intro__service {
   font-family: var(--font-heading);
   font-size: clamp(0.58rem, 1.3vw, 0.72rem);
-  letter-spacing: 0.42em;
+  letter-spacing: 0.38em;
   color: var(--color-accent);
   text-transform: uppercase;
 }
-
-/* Keyframes */
-@keyframes ep-pipe-draw  { to { stroke-dashoffset: 0; } }
-@keyframes ep-fade-in    { to { opacity: 1; } }
-@keyframes ep-pop        { to { transform: scale(1); } }
-@keyframes ep-rise {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes ep-logo-in {
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes ep-name-in {
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
