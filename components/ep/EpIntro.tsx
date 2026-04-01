@@ -1,69 +1,85 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { useEpIntro } from './EpIntroContext'
 
 export default function EpIntro() {
   const { setDone } = useEpIntro()
-  const overlayRef = useRef<HTMLDivElement>(null)
+  const [fading, setFading] = useState(false)
+  const [gone, setGone] = useState(false)
   const hasRun = useRef(false)
 
   useEffect(() => {
     if (hasRun.current) return
     hasRun.current = true
 
-    const overlay = overlayRef.current
-    if (!overlay) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setGone(true)
+      setDone()
+      return
+    }
 
-    // After all CSS animations complete (~2.8s), fade out overlay
-    const timer = setTimeout(() => {
-      if (overlay) {
-        overlay.style.opacity = '0'
-        overlay.style.pointerEvents = 'none'
-      }
-      setTimeout(() => {
-        setDone()
-      }, 600)
-    }, 2800)
+    // Pipes draw in 0-1.0s, fitting pops 0.9s, brand rises 1.2s
+    // Hold until 2.4s, then fade out over 0.7s
+    const fadeTimer = setTimeout(() => setFading(true), 2400)
+    const doneTimer = setTimeout(() => {
+      setGone(true)
+      setDone()
+    }, 3100)
 
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(fadeTimer)
+      clearTimeout(doneTimer)
+    }
   }, [setDone])
 
+  if (gone) return null
+
   return (
-    <div className="ep-intro" ref={overlayRef}>
+    <div className={`ep-intro${fading ? ' ep-intro--fading' : ''}`} aria-hidden="true">
+
+      {/* Animated pipe assembly */}
       <svg
-        className="ep-intro__pipe-svg"
-        viewBox="0 0 1200 400"
-        preserveAspectRatio="xMidYMid meet"
+        className="ep-intro__pipes"
+        viewBox="0 0 400 240"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Main pipe path: horizontal run, curve up, horizontal run, curve down, horizontal run */}
-        <path
-          className="ep-intro__pipe-path"
-          d="M -50 280 L 200 280 Q 260 280 260 220 L 260 180 Q 260 120 320 120 L 880 120 Q 940 120 940 180 L 940 220 Q 940 280 1000 280 L 1250 280"
-        />
-        {/* Elbow joints */}
-        <circle cx="260" cy="280" r="8" className="ep-intro__joint ep-intro__joint--1" />
-        <circle cx="260" cy="120" r="8" className="ep-intro__joint ep-intro__joint--2" />
-        <circle cx="940" cy="120" r="8" className="ep-intro__joint ep-intro__joint--3" />
-        <circle cx="940" cy="280" r="8" className="ep-intro__joint ep-intro__joint--4" />
+        {/* Outer glow layer */}
+        <path className="ep-intro__pipe-glow ep-intro__pipe-glow--left"  d="M -10 120 L 200 120" />
+        <path className="ep-intro__pipe-glow ep-intro__pipe-glow--right" d="M 410 120 L 200 120" />
+        <path className="ep-intro__pipe-glow ep-intro__pipe-glow--top"   d="M 200 -10 L 200 120" />
 
-        {/* Glowing dot travelling along path */}
-        <circle r="6" className="ep-intro__dot">
-          <animateMotion
-            dur="1.6s"
-            begin="0s"
-            fill="freeze"
-            path="M -50 280 L 200 280 Q 260 280 260 220 L 260 180 Q 260 120 320 120 L 880 120 Q 940 120 940 180 L 940 220 Q 940 280 1000 280 L 1250 280"
-          />
-        </circle>
+        {/* Main pipe strokes */}
+        <path className="ep-intro__pipe ep-intro__pipe--left"  d="M -10 120 L 200 120" />
+        <path className="ep-intro__pipe ep-intro__pipe--right" d="M 410 120 L 200 120" />
+        <path className="ep-intro__pipe ep-intro__pipe--top"   d="M 200 -10 L 200 120" />
+
+        {/* End caps (flanges) */}
+        <circle cx="-10"  cy="120" r="13" className="ep-intro__cap ep-intro__cap--left"  />
+        <circle cx="410"  cy="120" r="13" className="ep-intro__cap ep-intro__cap--right" />
+        <circle cx="200"  cy="-10" r="13" className="ep-intro__cap ep-intro__cap--top"   />
+
+        {/* Central T-fitting */}
+        <circle cx="200" cy="120" r="24" className="ep-intro__fitting"       />
+        <circle cx="200" cy="120" r="15" className="ep-intro__fitting-inner" />
+        <circle cx="200" cy="120" r="5"  className="ep-intro__fitting-bolt"  />
       </svg>
 
-      <div className="ep-intro__text">
-        <div className="ep-intro__text-essential">ESSENTIAL</div>
-        <div className="ep-intro__text-sub">PLUMBING + GAS</div>
+      {/* Logo + wordmark */}
+      <div className="ep-intro__brand">
+        <Image
+          src="/ep-logo.png"
+          alt="Essential Plumbing and Gas"
+          width={180}
+          height={90}
+          className="ep-intro__logo"
+          priority
+        />
+        <p className="ep-intro__tagline">Plumbing + Gas Services</p>
       </div>
+
     </div>
   )
 }
