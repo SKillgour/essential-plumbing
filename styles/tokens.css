@@ -1,15 +1,15 @@
 :root {
-  --color-bg:           #08101A;
-  --color-surface:      #0D1925;
-  --color-surface-2:    #132030;
-  --color-surface-3:    #1A2A3D;
-  --color-accent:       #1E9FD4;
-  --color-accent-bright:#38BDF8;
-  --color-cream:        #E8F4F8;
-  --color-text:         #E8F4F8;
-  --color-text-muted:   rgba(232,244,248,0.6);
-  --color-border:       rgba(30,159,212,0.15);
-  --color-border-strong:rgba(30,159,212,0.35);
+  --color-bg:           #F5F9FC;
+  --color-surface:      #FFFFFF;
+  --color-surface-2:    #EAF3F9;
+  --color-surface-3:    #D9EBF5;
+  --color-accent:       #0D8AB5;
+  --color-accent-bright:#1E9FD4;
+  --color-cream:        #0B1E30;
+  --color-text:         #0B1E30;
+  --color-text-muted:   rgba(11,30,48,0.52);
+  --color-border:       rgba(13,138,181,0.15);
+  --color-border-strong:rgba(13,138,181,0.32);
 
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body:    'Inter', system-ui, sans-serif;

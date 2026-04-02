@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { useEpIntro } from './EpIntroContext'
 
 export default function EpIntro() {
@@ -19,13 +20,14 @@ export default function EpIntro() {
       return
     }
 
-    // Paths draw 0-1.2s, fill floods 1.2-1.8s, name rises 1.6s
-    // Hold until 2.8s, fade 0.6s, done 3.4s
-    const fadeTimer = setTimeout(() => setFading(true), 2800)
+    // Drop draws 0.15-1.15s, fill 1.0-1.6s, ripples 1.1-1.8s
+    // SVG exits 1.7s, real logo appears 1.65s, name 2.0s
+    // Hold until 3.1s, fade 0.65s, done 3.75s
+    const fadeTimer = setTimeout(() => setFading(true), 3100)
     const doneTimer = setTimeout(() => {
       setGone(true)
       setDone()
-    }, 3400)
+    }, 3750)
 
     return () => {
       clearTimeout(fadeTimer)
@@ -38,46 +40,49 @@ export default function EpIntro() {
   return (
     <div className={`ep-intro${fading ? ' ep-intro--fading' : ''}`} aria-hidden="true">
 
-      {/* Logo draw animation — two droplets traced by stroke-dasharray */}
-      <div className="ep-intro__logo-draw">
+      <div className="ep-intro__icon">
+        {/* Animated water droplet SVG */}
         <svg
-          viewBox="0 0 120 80"
+          className="ep-intro__drop-svg"
+          viewBox="0 0 100 110"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="ep-intro__svg"
         >
-          {/* Left droplet outline — drawn first */}
+          {/* Droplet fill (floods in after stroke) */}
           <path
-            className="ep-intro__path ep-intro__path--drop1"
-            d="M 30 62 C 14 62 6 50 6 40 C 6 28 18 14 30 4 C 42 14 54 28 54 40 C 54 50 46 62 30 62 Z"
+            className="ep-intro__drop-fill"
+            d="M 50 8 C 50 8 18 45 18 65 C 18 83.4 32.6 98 50 98 C 67.4 98 82 83.4 82 65 C 82 45 50 8 50 8 Z"
           />
-          {/* Left droplet fill flood — appears after stroke draws */}
+          {/* Droplet stroke (drawn first) */}
           <path
-            className="ep-intro__fill ep-intro__fill--drop1"
-            d="M 30 62 C 14 62 6 50 6 40 C 6 28 18 14 30 4 C 42 14 54 28 54 40 C 54 50 46 62 30 62 Z"
+            className="ep-intro__drop-stroke"
+            d="M 50 8 C 50 8 18 45 18 65 C 18 83.4 32.6 98 50 98 C 67.4 98 82 83.4 82 65 C 82 45 50 8 50 8 Z"
           />
-
-          {/* Right droplet outline — drawn second, slightly offset and smaller */}
-          <path
-            className="ep-intro__path ep-intro__path--drop2"
-            d="M 78 70 C 65 70 56 59 56 50 C 56 40 66 28 78 18 C 90 28 100 40 100 50 C 100 59 91 70 78 70 Z"
+          {/* Shine highlight */}
+          <ellipse
+            className="ep-intro__drop-shine"
+            cx="36" cy="52" rx="7" ry="11"
+            transform="rotate(-20 36 52)"
           />
-          {/* Right droplet fill */}
-          <path
-            className="ep-intro__fill ep-intro__fill--drop2"
-            d="M 78 70 C 65 70 56 59 56 50 C 56 40 66 28 78 18 C 90 28 100 40 100 50 C 100 59 91 70 78 70 Z"
-          />
-
-          {/* Highlight dots — pop in after fills */}
-          <circle cx="24" cy="34" r="3.5" className="ep-intro__dot ep-intro__dot--1" />
-          <circle cx="70" cy="40" r="3" className="ep-intro__dot ep-intro__dot--2" />
+          {/* Ripple rings at base */}
+          <ellipse className="ep-intro__ripple ep-intro__ripple--1" cx="50" cy="97" rx="22" ry="5" />
+          <ellipse className="ep-intro__ripple ep-intro__ripple--2" cx="50" cy="97" rx="36" ry="8" />
         </svg>
+
+        {/* Real logo — appears as SVG fades */}
+        <Image
+          src="/ep-logo.png"
+          alt="Essential Plumbing and Gas"
+          width={110}
+          height={110}
+          className="ep-intro__logo-img"
+          priority
+        />
       </div>
 
-      {/* Business name */}
       <div className="ep-intro__name-wrap">
-        <p className="ep-intro__business">ESSENTIAL PLUMBING</p>
-        <p className="ep-intro__service">+ GAS SERVICES</p>
+        <p className="ep-intro__business">Essential Plumbing</p>
+        <p className="ep-intro__service">+ Gas Services</p>
       </div>
 
     </div>
