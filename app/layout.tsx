@@ -3,10 +3,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Essential Plumbing + Gas Services | Palmerston North',
-  description: 'Licensed plumbers and gas fitters in Palmerston North. Bathroom renovations, hot water systems, leak repairs and caravan self-containment certification.',
-  icons: {
-    icon: '/favicon.png',
-  },
+  description: 'Reliable plumbing and gas services in Palmerston North. Maintenance, repairs, hot water systems and renovations.',
+  icons: { icon: '/favicon.png' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -16,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>
