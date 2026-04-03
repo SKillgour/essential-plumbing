@@ -83,47 +83,7 @@
 .ep-intro__ripple--1 { animation: ep-ripple 0.55s ease 0.62s forwards; }
 .ep-intro__ripple--2 { animation: ep-ripple 0.55s ease 0.77s forwards; }
 
-/* Phase 2: Two drip shapes draw up from the impact point */
-.ep-intro__drip-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  animation: ep-drip-svg-exit 0.4s ease 2.2s forwards;
-}
-
-.ep-intro__drip-stroke {
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 135;
-  stroke-dashoffset: 135;
-  opacity: 0;
-}
-.ep-intro__drip-stroke--left {
-  stroke: #0D8AB5;
-  animation: ep-drip-draw 0.65s ease 1.3s forwards;
-}
-.ep-intro__drip-stroke--right {
-  stroke: #2ec7c9;
-  animation: ep-drip-draw 0.65s ease 1.45s forwards;
-}
-
-.ep-intro__drip-fill {
-  opacity: 0;
-}
-.ep-intro__drip-fill--left {
-  fill: #0D8AB5;
-  animation: ep-fade-in 0.35s ease 1.92s forwards;
-}
-.ep-intro__drip-fill--right {
-  fill: #2ec7c9;
-  animation: ep-fade-in 0.35s ease 2.05s forwards;
-}
-
-/* Phase 3: Real logo crossfades in */
+/* Phase 2: Real logo crossfades in */
 .ep-intro__logo-img {
   position: absolute;
   inset: 0;
@@ -131,7 +91,7 @@
   height: 100%;
   object-fit: contain;
   opacity: 0;
-  animation: ep-logo-appear 0.55s ease 2.15s forwards;
+  animation: ep-logo-appear 0.55s ease 1.3s forwards;
 }
 
 .ep-intro__name-wrap {
@@ -140,7 +100,7 @@
   align-items: center;
   gap: 5px;
   opacity: 0;
-  animation: ep-name-in 0.5s ease 2.65s forwards;
+  animation: ep-name-in 0.5s ease 1.8s forwards;
 }
 .ep-intro__business {
   font-family: "Montserrat", sans-serif;
@@ -179,14 +139,7 @@
   from { opacity: 1; }
   to   { opacity: 0; }
 }
-@keyframes ep-drip-draw {
-  from { opacity: 1; stroke-dashoffset: 135; }
-  to   { opacity: 1; stroke-dashoffset: 0; }
-}
-@keyframes ep-drip-svg-exit {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
+
 @keyframes ep-logo-appear {
   from { opacity: 0; transform: scale(0.9); }
   to   { opacity: 1; transform: scale(1); }
