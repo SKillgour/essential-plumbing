@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 
 const LINK_LABELS = [
@@ -13,11 +14,41 @@ const LINK_LABELS = [
 
 export default function EpMobileNav() {
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [open])
+
+  const overlay = (
+    <div className={`ep-mobile-menu${open ? ' ep-mobile-menu--open' : ''}`} aria-hidden={!open}>
+      <ul className="ep-mobile-menu__links">
+        {LINK_LABELS.map(link => (
+          <li key={link.href}>
+            <a
+              href={link.href}
+              className="ep-mobile-menu__link"
+              onClick={() => setOpen(false)}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a
+            href="tel:0273870987"
+            className="ep-mobile-menu__cta"
+            onClick={() => setOpen(false)}
+          >
+            Call 027 387 0987
+          </a>
+        </li>
+      </ul>
+    </div>
+  )
 
   return (
     <>
@@ -33,30 +64,7 @@ export default function EpMobileNav() {
         <span className={`ep-hamburger__bar${open ? ' ep-hamburger__bar--open-3' : ''}`} />
       </button>
 
-      <div className={`ep-mobile-menu${open ? ' ep-mobile-menu--open' : ''}`} aria-hidden={!open}>
-        <ul className="ep-mobile-menu__links">
-          {LINK_LABELS.map(link => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="ep-mobile-menu__link"
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a
-              href="tel:0273870987"
-              className="ep-mobile-menu__cta"
-              onClick={() => setOpen(false)}
-            >
-              Call 027 387 0987
-            </a>
-          </li>
-        </ul>
-      </div>
+      {mounted && createPortal(overlay, document.body)}
     </>
   )
 }
