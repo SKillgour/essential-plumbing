@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import EpCarousel from '@/components/ep/EpCarousel'
 import EpScrollReveal from '@/components/ep/EpScrollReveal'
+import EpMobileNav from '@/components/ep/EpMobileNav'
 
 export default function HomePage() {
   return (
@@ -26,6 +27,7 @@ export default function HomePage() {
           </nav>
 
           <a href="tel:027 387 0987" className="btn btn-nav">Call Now</a>
+          <EpMobileNav />
         </div>
       </header>
 
